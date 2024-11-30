@@ -3,9 +3,13 @@ from pydantic import BaseModel
 from sqlalchemy import create_engine,Column,Integer,String,Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker,Session
+from fastapi.staticfiles import StaticFiles
 
 #Initialize FastAPI
 app = FastAPI()
+
+# 指定靜態文件目錄
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 #Database
 DATABASE_URL = "sqlite:///./todos.db"
@@ -14,7 +18,6 @@ engine = create_engine(DATABASE_URL, connect_args={"check_same_thread":False})
 SessionLocal = sessionmaker(autocommit=False,autoflush=False,bind=engine)
 
 #Define Model
-
 class Todo(Base):
     __tablename__ = "todos"
     id = Column(Integer, primary_key=True,index=True)
@@ -59,7 +62,6 @@ ROUTING
 def create_todo(todo: TodoCreate,db: Session = Depends(get_db)):
     db_todo =Todo(**todo.dict())
     db.add(db_todo)
-    db.add(db_todo)
     db.commit()
     db.refresh(db_todo)
     return db_todo
@@ -75,6 +77,7 @@ def read_todo(todo_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detaols="Todo not found")
     return db_todo
 
+
 @app.put("/todo/{todo_id}",response_model = TodoResponse)
 def updata_todo(todo_id: int,todo: TodoCreate, db:Session = Depends(get_db)):
     db_todo = db.query(Todo).filter(Todo.id == todo_id).first()
@@ -89,7 +92,7 @@ def updata_todo(todo_id: int,todo: TodoCreate, db:Session = Depends(get_db)):
 
 @app.delete("/todo/{todo_id}")
 def delete_todo(todo_id: int,db: Session = Depends(get_db)):
-    db_todo = db.query(Todo).filter(Todo.id == todo_id).fitst()
+    db_todo = db.query(Todo).filter(Todo.id == todo_id).first()
     if not db_todo:
         raise HTTPException(status_code=404, details="Todo not found")
     db.delete(db_todo)

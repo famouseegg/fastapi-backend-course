@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Todo</title>
+</head>
+<body>
+    <h2>Create a New Todo </h2>
+    
+    <form id="todoForm">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <input type="text" id="description" name="description"><br><br>
+
+        <label for="completed">Completed:</label><br>
+        <input type="checkbox" id="completed" name="completed"><br><br>
+
+        <button type="submit">Create Todo</button>
+    </form>
+
+    <div id="response"></div><br><br>
+
+    <form id="delete_Form">
+        <label for="title">id :</label><br>
+        <input type="text" id="id" name="id" required><br><br>
+        <button type="submit">delete Todo</button>
+    </form>
+    <div id="d_response"></div><br><br>
+
+    <div id="showlist"></div>
+
+    <script src="showlist.js"></script>  
+    <script src="post.js"></script>
+    <script src="delete.js"></script>
+    
+</body>
+</html>

@@ -13,6 +13,7 @@ async function displaylist(){
         const descriptions = data.map(todo=>todo.description);
         const  completeds= data.map(todo=>todo.completed);
         const ids = data.map(todo=>todo.id);
+        const due_dates = data.map(todo=>todo.id);
 
         let tablehtml =
         `<div id="table-container"></div>
@@ -23,6 +24,7 @@ async function displaylist(){
                     <th>descriprion</th>
                     <th>completed</th>
                     <th>id</th>
+                    <th>due_dates</th>
                 </tr>
             </thead>
             
@@ -34,6 +36,7 @@ async function displaylist(){
                 <th>${descriptions[i]}</th>
                 <th>${completeds[i]? `YEs`:`NO`}</th>
                 <th>${ids[i]}</th>
+                <th>${due_dates[i]}</th>
             </tr>`;
         }
         tablehtml+=

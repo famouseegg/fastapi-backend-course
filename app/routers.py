@@ -1,4 +1,4 @@
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import Session
 from fastapi import Depends,HTTPException,APIRouter
 
@@ -60,3 +60,9 @@ def delete_todo(todo_id: int,db: Session = Depends(get_db)):
     db.delete(db_todo)
     db.commit()
     return {"detail": "Todo deleted successfully"}
+
+def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+def check_password(self, password):
+    return check_password_hash(self.password_hash, password)
